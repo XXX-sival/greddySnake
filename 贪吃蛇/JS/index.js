@@ -17,10 +17,10 @@ class GreedySnake {
 
 
     init() {
-        this.pos = [];//记录所有蛇方块的位置
-        this.foodPos = [];//记录食物位置
-        this.score = 0;//得分
-        this.eating = false;
+        this.pos = [];///用于记录所有蛇方块的位置
+        this.foodPos = [];//用于记录食物位置
+        this.score = 0;//用于记录得分
+        this.eating = false;//用于判断是否遇到食物
         this.initSnake();
         this.updata();
         this.initFood();
@@ -30,8 +30,8 @@ class GreedySnake {
 
     updata() {//更新链表关系函数
         this.linkedList = this.snakeWrap.querySelectorAll('.snake')
-        this.head = this.linkedList[0];
-        this.tail = this.linkedList[this.linkedList.length - 1]
+        this.head = this.linkedList[0];//---------------------------------蛇头
+        this.tail = this.linkedList[this.linkedList.length - 1]//---------蛇尾
         for (var i = 0; i < this.linkedList.length; i++) {
             this.linkedList[i].next = this.linkedList[i + 1];
             this.linkedList[i].previous = this.linkedList[i - 1];
@@ -51,7 +51,8 @@ class GreedySnake {
         this.newBlock.style.width = bw + 'px'
         this.newBlock.style.height = bh + 'px'
 
-        return this.newBlock;
+        // this.snakeWrap.appendChild(newBlock)//调用时就追加元素引入页面中  不好，后面moving的时候用不了
+        return this.newBlock;//返回这个创建好的方块
     }
 
 
@@ -60,7 +61,7 @@ class GreedySnake {
         this.snakeBody1 = this.createBlock(1, 0, 'snakeBody snake');
         this.snakeBody2 = this.createBlock(0, 0, 'snakeBody snake');
 
-        this.snakeWrap.appendChild(this.snakeHead);
+        this.snakeWrap.appendChild(this.snakeHead);//往页面中追加元素，注意appendChild和insertBefore的区别
         this.snakeWrap.appendChild(this.snakeBody1);
         this.snakeWrap.appendChild(this.snakeBody2);
 
@@ -70,7 +71,7 @@ class GreedySnake {
 
     initFood() {//食物的初始化
         var x, y;//随机数
-        var include = true;
+        var include = true;//食物是否与蛇重叠
         while (include) {
             x = Math.round(Math.random() * (td - 1));
             y = Math.round(Math.random() * (tr - 1));
@@ -82,7 +83,7 @@ class GreedySnake {
         }
         this.food = this.createBlock(x, y, 'food');
         this.snakeWrap.appendChild(this.food);
-        this.foodPos = [x, y];
+        this.foodPos = [x, y];//记录食物位置
     }
 
 
@@ -137,7 +138,7 @@ class GreedySnake {
 
 
 
-        that.pos.unshift([that.pos[0][0] + i, that.pos[0][1] + j]);//更新位置
+        that.pos.unshift([that.pos[0][0] + i, that.pos[0][1] + j]);//更新位置,保持数组头存的是蛇头的位置,链表更新会比较简单
 
 
         that.updata();//更新链表
